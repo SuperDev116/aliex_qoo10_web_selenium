@@ -67,7 +67,6 @@ class LoginController extends Controller
             'email' => $request->email,
             'tool_id' => $request->tool_id,
             'tool_pass' => $request->tool_pass,
-            'platform' => 'amazon',
         ]);
         $status = $response->status();
 

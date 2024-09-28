@@ -9,11 +9,11 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.INTEGER,
       allowNull: false, // Ensure user_id is not null
     },
-    amazon_email: {
+    ali_email: {
       type: Sequelize.STRING,
       allowNull: true, // Allow null if not provided
     },
-    amazon_password: {
+    ali_password: {
       type: Sequelize.STRING,
       allowNull: true, // Allow null if not provided
     },
@@ -33,6 +33,18 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.DECIMAL,
       allowNull: true, // Allow null if not provided
     },
+    ali_maincategory: {
+      type: Sequelize.STRING,
+      allowNull: true, // Allow null if not provided
+    },
+    ali_subcategory: {
+      type: Sequelize.STRING,
+      allowNull: true, // Allow null if not provided
+    },
+    ali_smallcategory: {
+      type: Sequelize.STRING,
+      allowNull: true, // Allow null if not provided
+    },
     qoo_maincategory: {
       type: Sequelize.STRING,
       allowNull: true, // Allow null if not provided
@@ -45,15 +57,11 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING,
       allowNull: true, // Allow null if not provided
     },
-    exhi_asins: {
-      type: Sequelize.STRING,
-      allowNull: true, // Allow null if not provided
-    },
-    ng_asins: {
-      type: Sequelize.STRING,
-      allowNull: true, // Allow null if not provided
-    },
     ng_words: {
+      type: Sequelize.STRING,
+      allowNull: true, // Allow null if not provided
+    },
+    remove_words: {
       type: Sequelize.STRING,
       allowNull: true, // Allow null if not provided
     },

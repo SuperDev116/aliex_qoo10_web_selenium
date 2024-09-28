@@ -13,18 +13,20 @@ class Setting extends Model
 	
 	protected $fillable = [
 		'user_id',
-		'amazon_email',
-		'amazon_password',
+		'ali_email',
+		'ali_password',
 		'qsm_email',
 		'qsm_password',
 		'qsm_apikey',
 		'multiplier',
+		'ali_maincategory',
+		'ali_subcategory',
+		'ali_smallcategory',
 		'qoo_maincategory',
 		'qoo_subcategory',
 		'qoo_smallcategory',
-		'exhi_asins',
-		'ng_asins',
 		'ng_words',
+		'remove_words',
 		'alert_email',
 	];
 

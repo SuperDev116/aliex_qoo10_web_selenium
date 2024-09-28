@@ -40,14 +40,14 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="row m-4">
-                                    <h4>AMAZON情報</h4>
+                                    <h4>Aliexpress情報</h4>
                                     <div class="mb-3">
-                                        <label for="amazon_email" class="form-label">メール<span class="text-danger small"> (必須)</span></label>
-                                        <input type="text" class="form-control" id="amazon_email" name="amazon_email" value="{{ isset($setting) ? $setting->amazon_email : '' }}" required>
+                                        <label for="ali_email" class="form-label">メール<span class="text-danger small"> (必須)</span></label>
+                                        <input type="text" class="form-control" id="ali_email" name="ali_email" value="{{ isset($setting) ? $setting->ali_email : '' }}" required>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="amazon_password" class="form-label">パスワード<span class="text-danger small"> (必須)</span></label>
-                                        <input type="password" class="form-control" id="amazon_password" name="amazon_password" value="{{ isset($setting) ? $setting->amazon_password : '' }}" required>
+                                        <label for="ali_password" class="form-label">パスワード<span class="text-danger small"> (必須)</span></label>
+                                        <input type="password" class="form-control" id="ali_password" name="ali_password" value="{{ isset($setting) ? $setting->ali_password : '' }}" required>
                                     </div>
                                 </div>
     
@@ -71,16 +71,42 @@
                             <div class="col-md-8">
                                 <div class="row m-4">
                                     <h4>出品カテゴリー</h4>
-    
+                                    
+                                    <h6>Aliexpress カテゴリー</h6>
+                                    @php
+                                        $ali_category_info = config('global.ali_category');
+                                    @endphp
+                                    <div class="col-md-4">
+                                        <label for="ali_maincategory" class="form-label">大カテゴリー<span class="text-danger small"> (必須)</span></label>
+                                        <select class="form-select" id="ali_maincategory" name="ali_maincategory">
+                                            <option value=""></option>
+                                            @foreach ($ali_category_info as $main_category => $sub_categories)
+                                                <option value="{{ $main_category }}" @if (isset($setting) && $main_category == $setting->ali_maincategory) selected @endif>{{ $main_category }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="ali_subcategory" class="form-label">中カテゴリー<span class="text-danger small"> (必須)</span></label>
+                                        <select class="form-select" id="ali_subcategory" name="ali_subcategory">
+                                            
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4 mb-4">
+                                        <label for="ali_smallcategory" class="form-label">小カテゴリー<span class="text-danger small"> (必須)</span></label>
+                                        <select class="form-select" id="ali_smallcategory" name="ali_smallcategory">
+                                            
+                                        </select>
+                                    </div>
+
                                     <h6>Qoo10 カテゴリー</h6>
                                     @php
-                                        $category_info = config('global.category');
+                                        $qoo10_category_info = config('global.qoo10_category');
                                     @endphp
                                     <div class="col-md-4">
                                         <label for="qoo_maincategory" class="form-label">大カテゴリー<span class="text-danger small"> (必須)</span></label>
                                         <select class="form-select" id="qoo_maincategory" name="qoo_maincategory" required>
                                             <option value=""></option>
-                                            @foreach ($category_info as $main_category => $sub_categories)
+                                            @foreach ($qoo10_category_info as $main_category => $sub_categories)
                                                 <option value="{{ $main_category }}" @if (isset($setting) && $main_category == $setting->qoo_maincategory) selected @endif>{{ $main_category }}</option>
                                             @endforeach
                                         </select>
@@ -100,19 +126,15 @@
                                 </div>
     
                                 <div class="row m-4">
-                                    <h4>出品設定、除外設定</h4>
-                                    <p class="text-danger">出品ASIN、除外ASIN、除外ワードは半角「Enter」切りで入力してください。</p>
-                                    <div class="col-md-4">
-                                        <label for="exhi_asins" class="form-label">出品ASIN<span class="text-danger small"> (必須)</span></label>
-                                        <textarea class="form-control" id="exhi_asins" name="exhi_asins" rows="10" required>{{ isset($setting) ? $setting->exhi_asins : '' }}</textarea>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label for="ng_asins" class="form-label">除外ASIN</label>
-                                        <textarea class="form-control" id="ng_asins" name="ng_asins" rows="10">{{ isset($setting) ? $setting->ng_asins : '' }}</textarea>
-                                    </div>
-                                    <div class="col-md-4">
+                                    <h4>除外設定</h4>
+                                    <p class="text-danger">除外ワード、削除ワードは半角コンマ切りで入力してください。</p>
+                                    <div class="col-md-6">
                                         <label for="ng_words" class="form-label">除外ワード</label>
-                                        <textarea class="form-control" id="ng_words" name="ng_words" rows="10">{{ isset($setting) ? $setting->ng_words : '' }}</textarea>
+                                        <textarea class="form-control" id="ng_words" name="ng_words" rows="5">{{ isset($setting) ? $setting->ng_words : "" }}</textarea>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="remove_words" class="form-label">削除ワード</label>
+                                        <textarea class="form-control" id="remove_words" name="remove_words" rows="5">{{ isset($setting) ? $setting->remove_words : "" }}</textarea>
                                     </div>
                                 </div>
     
@@ -156,18 +178,111 @@
 <!-- start additional scripts -->
 @push('scripts')
 <script type="text/javascript">
-    var qoo_category_json = <?php echo(json_encode($category_info)); ?>;
+    var qoo_category_json = <?php echo(json_encode($qoo10_category_info)); ?>;
     
     var qoo_maincategory = "";
     var qoo_subcategory = "";
     var qoo_smallcategory = "";
-
+    
     qoo_maincategory = "<?php if (isset($setting) && $setting->qoo_maincategory) echo($setting->qoo_maincategory); ?>";
     qoo_subcategory = "<?php if (isset($setting) && $setting->qoo_subcategory) echo($setting->qoo_subcategory); ?>";
     qoo_smallcategory = "<?php if (isset($setting) && $setting->qoo_smallcategory) echo($setting->qoo_smallcategory); ?>";
+    
+    var ali_category_json = <?php echo(json_encode($ali_category_info)); ?>;
+
+    var ali_maincategory = "";
+    var ali_subcategory = "";
+    var ali_smallcategory = "";
+
+    ali_maincategory = "<?php if (isset($setting) && $setting->ali_maincategory) echo($setting->ali_maincategory); ?>";
+    ali_subcategory = "<?php if (isset($setting) && $setting->ali_subcategory) echo($setting->ali_subcategory); ?>";
+    ali_smallcategory = "<?php if (isset($setting) && $setting->ali_smallcategory) echo($setting->ali_smallcategory); ?>";
 
     $(document).ready(function ()
     {
+        // initialize aliexpress category
+        $('#ali_maincategory').val(ali_maincategory);
+
+        if (ali_maincategory != "" && ali_subcategory != "" && ali_smallcategory != "")
+        {
+            subCHtml = '<option value=""></option>';
+            for (const item in ali_category_json[ali_maincategory])
+            {
+                if (item == ali_subcategory)
+                {
+                    subCHtml += `<option value="${item}" data-main-category="${ali_maincategory}" selected>${item}</option>`;
+                }
+                else
+                {
+                    subCHtml += `<option value="${item}" data-main-category="${ali_maincategory}">${item}</option>`;
+                }
+            }
+            $('#ali_subcategory').html(subCHtml);
+            
+            smallCHtml = '<option value=""></option>';
+
+            const smallCategories = ali_category_json[ali_maincategory][ali_subcategory];
+
+            Object.entries(smallCategories).forEach(([cate, cate_obj]) =>
+            {
+                if (cate_obj.url == ali_smallcategory)
+                {
+                    smallCHtml +=
+                        `<option
+                            value="${cate_obj.url}"
+                            data-main-category="${ali_maincategory}"
+                            data-sub-category="${ali_subcategory}" selected>
+                            ${cate}</option>`;
+                }
+                else
+                {
+                    smallCHtml +=
+                        `<option
+                            value="${cate_obj.url}"
+                            data-main-category="${ali_maincategory}"
+                            data-sub-category="${ali_subcategory}">
+                            ${cate}</option>`;
+                }
+            });
+            
+            $('#ali_smallcategory').html(smallCHtml);
+        }
+
+        // qoo10 category select box
+        $('#ali_maincategory').on('change', function (event)
+        {
+            ali_maincategory = $(this).val();
+            subCHtml = '<option value=""></option>';
+            for (const ali_subcategory in ali_category_json[ali_maincategory])
+            {
+                subCHtml += `<option value="${ali_subcategory}" data-main-category="${ali_maincategory}">${ali_subcategory}</option>`;
+            }
+            $('#ali_subcategory').html(subCHtml);
+            $('#ali_smallcategory').html('');
+        });
+
+        $('#ali_subcategory').on('change', function (event)
+        {
+            ali_subcategory = $(this).val();
+            smallCHtml = '<option value=""></option>';
+            const smallCategories = ali_category_json[ali_maincategory][ali_subcategory];
+
+            Object.entries(smallCategories).forEach(([cate, cate_obj]) => {
+                smallCHtml +=
+                    `<option
+                        value="${cate_obj.url}"
+                        data-main-category="${ali_maincategory}"
+                        data-sub-category="${ali_subcategory}">
+                        ${cate}</option>`;
+            });
+            
+            $('#ali_smallcategory').html(smallCHtml);
+        });
+
+        $('#ali_smallcategory').on('change', function (event) {
+            ali_smallcategory = $(this).val();
+        });
+
         // initialize qoo10 category
         $('#qoo_maincategory').val(qoo_maincategory);
 
@@ -256,9 +371,8 @@
         {
             const fields =
             [
-                { id: '#amazon_email', message: 'アマゾンアクセスキーは必須です。' },
-                { id: '#amazon_password', message: 'アマゾンシークレットキーは必須です。' },
-                { id: '#amazon_partnertag', message: 'アマゾンパートナータグは必須です。' },
+                { id: '#ali_email', message: 'アマゾンアクセスキーは必須です。' },
+                { id: '#ali_password', message: 'アマゾンシークレットキーは必須です。' },
                 { id: '#qsm_email', message: 'QSMメールは必須です。' },
                 { id: '#qsm_password', message: 'QSMパスワードは必須です。' },
                 { id: '#qsmAPIKey', message: 'QSM APIキーは必須です。' },
