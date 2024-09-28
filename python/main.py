@@ -2,7 +2,7 @@ import tkinter as tk
 import threading
 from datetime import datetime
 from tkinter import messagebox
-from amazon import scraping, checking_price_stock
+from ali import scraping, checking_price_stock
 
 
 status = {}
@@ -15,20 +15,20 @@ def run_checking_price_stock_in_thread():
     
 def draw_main_window():
     setting_window = tk.Tk()
-    setting_window.title('Amazon→Qoo10出品ツール')
+    setting_window.title('アリエク→Qoo10出品ツール')
     setting_window.geometry('500x300')
 
     lbl_title = tk.Label(
-        text='Amazon→Qoo10出品ツール',
+        text='アリエク→Qoo10出品ツール',
         font=('Arial', 24)
     )
     lbl_title.pack()
     lbl_title.place(x=50, y=50)
     
-    # Amazonスクレイピング
+    # アリエクスクレイピング
     btn_combined_sale = tk.Button(
         setting_window,
-        text='AMAZON\nスクレイピング',
+        text='アリエク\nスクレイピング',
         command=run_scraping_in_thread,
         font=('Arial', 14),
         width=15,
