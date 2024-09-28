@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class AmazonProductsTableSeeder extends Seeder
+class AliProductsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -46,6 +46,6 @@ class AmazonProductsTableSeeder extends Seeder
         }
 
         // Insert data into the amazon_products table
-        DB::table('amazon_products')->insert($products);
+        DB::table('ali_products')->insert($products);
     }
 }

@@ -5,7 +5,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\SettingController;
-use App\Http\Controllers\AmazonController;
+use App\Http\Controllers\AliController;
 use App\Http\Controllers\QooController;
 use App\Http\Controllers\MypageController;
 use App\Http\Controllers\DownloadController;
@@ -27,11 +27,10 @@ Route::group(['middleware' => ['auth']], function ()
     // exhibition setting
     Route::match(['get', 'post'], 'setting', [SettingController::class, 'index'])->name('setting');
 
-    // Amazon products
-    Route::get('amazon/view', [AmazonController::class, 'index'])->name('amazon.view');
-    Route::get('amazon/list', [AmazonController::class, 'list'])->name('amazon.list');
-    Route::post('amazon/destroy', [AmazonController::class, 'destroy'])->name('amazon.destroy');
-
+    // Aliexpress products
+    Route::get('ali/view', [AliController::class, 'index'])->name('ali.view');
+    Route::get('ali/list', [AliController::class, 'list'])->name('ali.list');
+    Route::post('ali/destroy', [AliController::class, 'destroy'])->name('ali.destroy');
 
     // Qoo10 products
     Route::get('qoo10/view', [QooController::class, 'index'])->name("qoo10.view");

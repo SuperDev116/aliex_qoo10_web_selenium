@@ -6,17 +6,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 
-class AmazonProduct extends Model
+class AliProduct extends Model
 {
     use HasFactory;
     use SoftDeletes;
     
-    protected $table = 'amazon_products';
+    protected $table = 'ali_products';
 
     protected $fillable = [
         'user_id',
-        'asin',
-        'is_prime',
         'title',
         'url',
         'shipping',

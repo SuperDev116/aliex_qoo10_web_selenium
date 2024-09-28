@@ -80,11 +80,11 @@
                 <span>出品設定</span>
               </a>
             </li>
-            <li <?php if (strpos(url()->current(), "amazon/view")) echo 'class="sidebar-item active"';
+            <li <?php if (strpos(url()->current(), "ali/view")) echo 'class="sidebar-item active"';
                 else echo 'class="sidebar-item"'; ?>>
-              <a href="{{ route('amazon.view') }}" class='sidebar-link'>
+              <a href="{{ route('ali.view') }}" class='sidebar-link'>
                 <i class="bi bi-grid-fill"></i>
-                <span>Amazon商品確認</span>
+                <span>Aliexpress商品確認</span>
               </a>
             </li>
             <li <?php if (strpos(url()->current(), "qoo10/view")) echo 'class="sidebar-item active"';

@@ -47,7 +47,6 @@
                     <thead>
                         <tr>
                             <th style="text-align: center;"></th>
-                            <th style="text-align: center;">ASIN</th>
                             <th style="text-align: center;">商品名</th>
                             <th style="text-align: center;">画像</th>
                             <th style="text-align: center;">価格</th>
@@ -77,7 +76,7 @@
         serverSide: true,
         autoConfig: true,
         pageLength: 10,
-        ajax: "{{ route('amazon.list') }}",
+        ajax: "{{ route('ali.list') }}",
         columns: [
             {
                 data: null,
@@ -88,31 +87,6 @@
                             <input type="checkbox" data-id="${row.id}" />
                         </div>`
                     );
-                }
-            },
-            {
-                data: null,
-                name: 'asin',
-                render: function(data, type, row) {
-                    if (row.is_prime) {
-                        return (
-                            `<div style="text-align: center;">
-                                <span class="badge bg-info">${row.asin}</span>
-                            </div>
-                            <div style="text-align: center;">
-                                <span class="badge bg-light-primary">Prime</span>
-                            </div>`
-                        );
-                    } else {
-                        return (
-                            `<div style="text-align: center;">
-                                <span class="badge bg-info">${row.asin}</span>
-                            </div>
-                            <div style="text-align: center;">
-                                <span class="badge bg-danger">非Prime</span>
-                            </div>`
-                        );
-                    }
                 }
             },
             {
@@ -216,7 +190,7 @@
         });
         
         $.ajax({
-            url: "{{ route('amazon.destroy') }}",
+            url: "{{ route('ali.destroy') }}",
             type: "post",
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

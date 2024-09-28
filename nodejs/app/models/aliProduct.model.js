@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-  const amazonProductList = sequelize.define("amazon_products", {
+  const aliProductList = sequelize.define("ali_products", {
     id: {
       type: Sequelize.INTEGER,
       primaryKey: true,
@@ -8,15 +8,6 @@ module.exports = (sequelize, Sequelize) => {
     user_id: {
       type: Sequelize.INTEGER,
       allowNull: false, // Ensure user_id is not null
-    },
-    asin: {
-      type: Sequelize.STRING,
-      allowNull: false, // Ensure ASIN is not null
-      unique: true, // Ensure ASIN is unique
-    },
-    is_prime: {
-      type: Sequelize.BOOLEAN, // Use BOOLEAN for true/false values
-      allowNull: false, // Ensure is_prime is not null
     },
     title: {
       type: Sequelize.STRING,
@@ -93,5 +84,5 @@ module.exports = (sequelize, Sequelize) => {
     updatedAt: 'updated_at', // Optional: Customize updatedAt field name
   });
 
-  return amazonProductList;
+  return aliProductList;
 };

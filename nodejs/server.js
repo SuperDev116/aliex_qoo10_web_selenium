@@ -2,7 +2,6 @@ const express = require( "express" );
 const cors = require( "cors" );
 const app = express();
 const route = require( "./app/routes" );
-const amazon = require("./app/controllers/amazon.controller");
 
 var corsOptions = {
 	origin: '*'
@@ -20,5 +19,3 @@ const PORT = process.env.PORT || 32768;
 app.listen( PORT, () => {
 	console.log( `Server is running on port ${PORT}.` );
 } );
-
-amazon.tracking();

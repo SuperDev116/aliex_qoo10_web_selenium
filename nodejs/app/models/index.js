@@ -17,6 +17,6 @@ db.sequelize = sequelize;
 
 db.users = require("./user.model.js")(sequelize, Sequelize);
 db.settings = require("./setting.model.js")(sequelize, Sequelize);
-db.amazonProducts = require("./amazonProduct.model.js")(sequelize, Sequelize);
+db.aliProducts = require("./aliProduct.model.js")(sequelize, Sequelize);
 db.qooProducts = require("./qooProduct.model.js")(sequelize, Sequelize);
 module.exports = db;

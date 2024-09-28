@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAmazonProductsTable extends Migration
+class CreateAliProductsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,9 @@ class CreateAmazonProductsTable extends Migration
      */
     public function up()
     {
-        Schema::create('amazon_products', function (Blueprint $table) {
+        Schema::create('ali_products', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('asin')->nullable();
-            $table->boolean('is_prime')->nullable()->default(false);
             $table->text('title')->nullable();
             $table->string('url')->nullable();
             $table->string('shipping')->nullable();

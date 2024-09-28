@@ -6,19 +6,19 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use DataTables;
 
-use App\Models\AmazonProduct;
+use App\Models\AliProduct;
 
-class AmazonController extends Controller
+class AliController extends Controller
 {
     public function index()
     {
-        return view('amazon');
+        return view('ali');
     }
 
     public function list(Request $request)
     {
         if ($request->ajax()) {
-			$data = AmazonProduct::where('user_id', Auth::id())->get();
+			$data = AliProduct::where('user_id', Auth::id())->get();
 
 			return DataTables::of($data)
 				->addColumn('jsonstr', function ($row) {
@@ -31,7 +31,7 @@ class AmazonController extends Controller
 
     public function get_products(Request $request)
     {
-        $products = AmazonProduct::where('user_id', $request->user_id)->get();
+        $products = AliProduct::where('user_id', $request->user_id)->get();
         return $products;
     }
 
@@ -40,9 +40,9 @@ class AmazonController extends Controller
         $input_data = $request->all();
         $product_data = json_decode($input_data['product'], true);
 
-        $old_product = AmazonProduct::where([
+        $old_product = AliProduct::where([
             'user_id' => $input_data['user_id'],
-            'asin' => $product_data['asin']
+            'title' => $product_data['title']
         ])->first();
 
         // Convert 'img_url_thumb' array to JSON if it exists
@@ -51,7 +51,7 @@ class AmazonController extends Controller
         }
         
         if (!$old_product) {
-            $product = new AmazonProduct;
+            $product = new AliProduct;
         } else {
             $product = $old_product;
         }
@@ -62,7 +62,7 @@ class AmazonController extends Controller
 
     public function destroy(Request $request)
     {
-        AmazonProduct::whereIn('id', $request->ids)->delete();
+        AliProduct::whereIn('id', $request->ids)->delete();
         return;
     }
 }
