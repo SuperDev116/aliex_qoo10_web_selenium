@@ -57,10 +57,10 @@ def draw_main_window():
     
     
 if __name__ == '__main__':
-    specific_date = datetime(2024, 9, 30)
+    specific_date = datetime(2024, 10, 30)
     current_date = datetime.now()
 
     if specific_date < current_date:
-        print('>>> expired <<<')
+        print('>>> すみません。何かバグがあるようです。 <<<')
     else:
         draw_main_window()

@@ -37,14 +37,12 @@ class AliController extends Controller
 
     public function save_products(Request $request)
     {
-        $input_data = $request->all();
-        $product_data = json_decode($input_data['product'], true);
-
+        $product_data = $request->all();
         $old_product = AliProduct::where([
-            'user_id' => $input_data['user_id'],
+            'user_id' => $product_data['user_id'],
             'title' => $product_data['title']
         ])->first();
-
+        
         // Convert 'img_url_thumb' array to JSON if it exists
         if (isset($product_data['img_url_thumb']) && is_array($product_data['img_url_thumb'])) {
             $product_data['img_url_thumb'] = json_encode($product_data['img_url_thumb']);

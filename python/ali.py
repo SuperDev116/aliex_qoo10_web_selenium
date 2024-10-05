@@ -10,6 +10,9 @@ from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
 
 
+SERVER_URL = 'https://aliexqoo10.com'
+# SERVER_URL = 'http://localhost:8000'
+
 def get_user_id():
     with open('account.ini', 'r') as file:
         return file.read()
@@ -19,8 +22,7 @@ print(f"USER_ID _____ _____ _____ {USER_ID}")
 
 def get_setting_value():
     try:
-        # setting_api_url = f'https://amazonqoo10main.com/api/v1/get_setting_value'
-        setting_api_url = f'http://localhost:8000/api/v1/get_setting_value'
+        setting_api_url = f'{SERVER_URL}/api/v1/get_setting_value'
         payload = {
             'user_id': USER_ID
         }
@@ -33,32 +35,23 @@ def get_setting_value():
         return json.loads(response.text)[0]
     except:
         messagebox.showwarning("警告", "出品設定情報がありません。\nまずは出品設定情報を設定ください。")
-        
-SETTING_VALUE = get_setting_value()
-    
-print(f"SETTING_VALUE _____ _____ _____ {SETTING_VALUE}")
 
 
 def save_product(product):
-    # setting_api_url = f'https://amazonqoo10main.com/api/v1/save_products'
-    setting_api_url = f'http://localhost:8000/api/v1/save_products'
-    payload = {
-        'user_id': USER_ID,
-        'product': product,
-    }
+    save_api_url = f'{SERVER_URL}/api/v1/save_products'
     headers = {
-        'Content-Type': 'application/x-www-form-urlencoded'
+        'Content-Type': 'application/json'
     }
-    
-    response = requests.post(setting_api_url, headers=headers, data=payload)
-    return json.loads(response.text)[0]
+    response = requests.post(save_api_url, headers=headers, json=product)
+    print(response.text)
+    return
 
 
 def scraping():
-    products_url = []
-    products_info = []
-    
-    json_path = f'assets/download/aliex_data/aliex_products.json'
+    SETTING_VALUE = get_setting_value()
+    if SETTING_VALUE == None:
+        messagebox.showwarning("警告", "出品設定情報がありません。\nまずは出品設定情報を設定ください。")
+        return
     
     driver = webdriver.Chrome()
     driver.maximize_window()
@@ -75,12 +68,13 @@ def scraping():
     fee_free_span.click()
     time.sleep(3)
 
+    products_url = []
     try:
         pagination_ul = root_div.find_element(By.CLASS_NAME, 'comet-pagination')
 
         if pagination_ul:
 
-            for i in range(5):
+            for i in range(1):
                 
                 pyautogui.hotkey('ctrl', 'f')
                 time.sleep(2)
@@ -139,7 +133,8 @@ def scraping():
             # -------------------------
             # quantity 
             # ------------------------- 
-            product_info['quantity'] = driver.find_element(By.CSS_SELECTOR, 'div[class*="quantity--info"]').text
+            qty_str = driver.find_element(By.CSS_SELECTOR, 'div[class*="quantity--info"]').text
+            product_info['quantity'] = int(re.findall(r'\d+', qty_str.replace(',', ''))[0])
             print(f'quantity _____ _____ _____ {product_info["quantity"]}')
             
             # -------------------------
@@ -176,8 +171,9 @@ def scraping():
             # price 
             # ------------------------- 
             try:
-                price_info = info_div.find_element(By.CSS_SELECTOR, 'div[class*="price--original"]').text
-                product_info['price'] = price_info.split('円')[0] + '円'
+                price_str = info_div.find_element(By.CSS_SELECTOR, 'span[class*="price--originalText"]').text
+                product_info['r_price'] = int(re.findall(r'\d+', price_str.replace(',', ''))[0])
+                product_info['price'] = product_info['r_price']
                 print(f'price _____ _____ _____ {product_info["price"]}')
             except:
                 print('price _____ _____ _____ error!!!')
@@ -238,30 +234,25 @@ def scraping():
             reFunc('material', r"(素材|材料|material):\s*(.*)", r".*素材.*|.*材料.*|.*material.*")
             reFunc('origin', r"(起源|origin):\s*(.+)", r".*起源.*|.*origin.*")
             
+            product_info['user_id'] = USER_ID
             product_info['exhibit'] = 1
             product_info['reason'] = ''
             product_info['id'] = index
             index += 1
             
-            time.sleep(3)
+            time.sleep(3)                
             
-            products_info.append(product_info)
-            with open(json_path, 'w', encoding='utf-8') as json_file:
-                json.dump(products_info, json_file, ensure_ascii=False, indent=4)
-                
+            save_product(product_info)
         except:
             pass
             
-        save_product(product_info)
-        
     driver.quit()
     
     messagebox.showinfo("OK", "スクレイピング完了しました。")
     
     
 def get_past_products():
-    product_api_url = f'https://amazonqoo10main.com/api/v1/get_products'
-    # product_api_url = f'http://localhost:8000/api/v1/get_products'
+    product_api_url = f'{SERVER_URL}/api/v1/get_products'
     payload = {
         'user_id': USER_ID
     }
@@ -274,6 +265,7 @@ def get_past_products():
     
     
 def checking_price_stock():
+    SETTING_VALUE = get_setting_value()
     if SETTING_VALUE == None:
         messagebox.showwarning("警告", "出品設定情報がありません。\nまずは出品設定情報を設定ください。")
         return
@@ -295,8 +287,8 @@ def checking_price_stock():
             
             # check price
             info_div = driver.find_element(By.CSS_SELECTOR, 'div.pdp-info')
-            price_info = info_div.find_element(By.CSS_SELECTOR, 'div[class*="price--original"]').text
-            price = price_info.split('円')[0] + '円'
+            price_str = info_div.find_element(By.CSS_SELECTOR, 'span[class*="price--originalText"]').text
+            price = int(re.findall(r'\d+', price_str.replace(',', ''))[0])
             print(f"price _____ _____ _____ {price}")
             
             r_price = exhibited_datum['r_price']

@@ -151,7 +151,7 @@
       <button style="position: fixed; bottom: 50px; left: 50px; z-index: 100;" class="btn btn-danger">
         <a href="{{ route('download.zip') }}" class='sidebar-link' style="color: white;">
           <i class="bi bi-download"></i>
-          <span>ツール 9月28日版</span>
+          <span>ツール 10月5日版</span>
         </a>
       </button>
 

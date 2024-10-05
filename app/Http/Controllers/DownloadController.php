@@ -18,15 +18,15 @@ class DownloadController extends Controller
         
         // Step 2: Create a Zip file
         $timestamp = date('Ymd');
-        $zip_filename = "amazon_tool_{$timestamp}.zip";
+        $zip_filename = "aliex_tool_{$timestamp}.zip";
         $zip_filepath = public_path($zip_filename);
 
         $zip = new ZipArchive;
 
         if ($zip->open($zip_filepath, ZipArchive::CREATE | ZipArchive::OVERWRITE) === TRUE)
         {
-            $exe_filePath = public_path('amazon_tool.exe');
-            $zip->addFile($exe_filePath, 'amazon_tool.exe');
+            $exe_filePath = public_path('aliex_tool.exe');
+            $zip->addFile($exe_filePath, 'aliex_tool.exe');
             $zip->addFile($ini_filepath, 'account.ini');
             $zip->close();
         }
