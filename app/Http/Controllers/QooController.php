@@ -28,4 +28,10 @@ class QooController extends Controller
 				->make(true);
 		}
     }
+    
+    public function destroy(Request $request)
+    {
+        QooProduct::whereIn('id', $request->ids)->delete();
+        return;
+    }
 }

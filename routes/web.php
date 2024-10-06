@@ -31,10 +31,11 @@ Route::group(['middleware' => ['auth']], function ()
     Route::get('ali/view', [AliController::class, 'index'])->name('ali.view');
     Route::get('ali/list', [AliController::class, 'list'])->name('ali.list');
     Route::post('ali/destroy', [AliController::class, 'destroy'])->name('ali.destroy');
-
+    
     // Qoo10 products
     Route::get('qoo10/view', [QooController::class, 'index'])->name("qoo10.view");
     Route::get('qoo10/list', [QooController::class, 'list'])->name("qoo10.list");
+    Route::post('qoo10/destroy', [AliController::class, 'destroy'])->name('qoo10.destroy');
     
     // User
     Route::post('change_pwd', [MypageController::class, 'change_pwd'])->name('change_pwd');

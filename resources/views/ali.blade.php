@@ -25,10 +25,8 @@
         <div class="row">
             {{-- <h3>商品情報（価格と在庫を確認しましょう！）</h3> --}}
             <div class="col-4 col-md-4 order-md-1 order-last">
-                {{-- <h5 style="color:#3550b1" class="mt-3">【データ取得中の商品】:<strong style="color:#3550b1" id="updating">0</strong></h5> --}}
             </div>
             <div class="col-4 col-md-4 order-md-1 order-last">
-                {{-- <h5 style="color: #7c8d21;" class="mt-3">【データ取得完了の商品】:<strong style="color: #7c8d21;" id="complete">22</strong></h5> --}}
             </div>
             <div class="col-4 col-md-4 order-md-2 order-first">
                 <button type="button" class="m-2 btn btn-danger btn-icon float-lg-end" id="remove_products">
@@ -46,7 +44,9 @@
                 <table class="table table-bordered table-hover datatable">
                     <thead>
                         <tr>
-                            <th style="text-align: center;"></th>
+                            <th style="text-align: center;">
+                                <input type="checkbox" class="all" />
+                            </th>
                             <th style="text-align: center;">商品名</th>
                             <th style="text-align: center;">画像</th>
                             <th style="text-align: center;">価格</th>
@@ -81,10 +81,11 @@
             {
                 data: null,
                 name: 'id',
+                orderable: false,
                 render: function(data, type, row) {
                     return (
                         `<div style="text-align: center;">
-                            <input type="checkbox" data-id="${row.id}" />
+                            <input type="checkbox" class="product-checkbox" data-id="${row.id}" />
                         </div>`
                     );
                 }
@@ -179,6 +180,10 @@
                 }
             },
         ]
+    });
+    
+    $('.all').on('change', function() {
+        $('.product-checkbox').prop('checked', this.checked);
     });
 
     $('#remove_products').on('click', function() {
