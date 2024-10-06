@@ -1,12 +1,10 @@
 const express = require( "express" );
 const router = express.Router();
-const amazonRoute = require( "./amazon.route" );
 const qooRoute = require( "./qoo.route" );
 const bodyParser = require( "body-parser" );
 
 const initializeRoute = ( app ) =>
 {
-    router.use( '/amazon', amazonRoute );
     router.use( '/qoo', qooRoute );
     app.use( '/api/v1', router );
     app.use( bodyParser.json( {

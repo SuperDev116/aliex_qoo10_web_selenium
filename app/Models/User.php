@@ -55,10 +55,10 @@ class User extends Authenticatable
      */
     protected $appends = [];
 
-    public function amazon_products()
+    public function ali_products()
     {
         return $this->hasMany(
-            AmazonProduct::class,
+            AliProduct::class,
             'user_id'
         );
     }

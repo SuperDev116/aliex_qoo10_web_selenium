@@ -74,7 +74,7 @@ def scraping():
 
         if pagination_ul:
 
-            for i in range(1):
+            for i in range(5):
                 
                 pyautogui.hotkey('ctrl', 'f')
                 time.sleep(2)

@@ -1,5 +1,5 @@
 const axios = require('axios');
-const { users, settings, amazonProducts, qooProducts } = require( "../models" );
+const { users, settings, aliProducts, qooProducts } = require( "../models" );
 
 
 class ExhibitQoo
@@ -16,10 +16,9 @@ class ExhibitQoo
     async main()
     {
         const exhiData = {
-            // SecondSubCat: this.category,
-            SecondSubCat: '320001958',
+            SecondSubCat: this.category,
             ItemTitle: this.product.title.slice(0, 99),
-            SellerCode: `SKU-${this.product.asin}`,
+            SellerCode: `SKU-${Math.floor(Math.random() * 8999999999) + 1000000001}`,
             ProductionPlace: this.product.origin,
             ProductionPlaceType: this.product.origin.includes('日本') ? '1' : '2',
             Weight: this.product.weight,
@@ -140,45 +139,40 @@ const exhibit = async ( req, res ) => {
                 setting: setting_info
             });
 
-            const amazonProLi = await amazonProducts.findAll({ where: { user_id: userId } });
-            let len = amazonProLi.length;
+            const aliProLi = await aliProducts.findAll({ where: { user_id: userId } });
+            let len = aliProLi.length;
 
             let index = 0;
 
             const exhiInterval = setInterval( () =>
             {
-                let product = amazonProLi[index];
-
-                if (!product.is_prime || !product.quantity)
+                if (index < len)
                 {
-                    index++;
-                    return;
-                }
-
-                let skipItem = false;
-                if (ng_words)
-                {
-                    for (const ngw of ng_words.split('\r\n')) {
-                        if (ngw && product.title.includes(ngw)) {
-                            console.log(`NGWords _____ _____ _____ ${ngw} _____ _____ _____ ${product.title}`);
-                            skipItem = true;
-                            break;
+                    let product = aliProLi[index];
+                    
+                    let skipItem = false;
+                    if (ng_words)
+                    {
+                        for (const ngw of ng_words.split('\r\n')) {
+                            if (ngw && product.title.includes(ngw)) {
+                                console.log(`NGWords _____ _____ _____ ${ngw} _____ _____ _____ ${product.title}`);
+                                skipItem = true;
+                                break;
+                            }
                         }
                     }
-                }
-                
-                if (!skipItem)
-                {
-                    if ( index < len ) {
+                    
+                    if (!skipItem)
+                    {
                         const exhibitProduct = new ExhibitQoo( userId, product, apikey, qoo_smallcategory, multiplier );
                         exhibitProduct.main();
-                    } else {
-                        clearInterval( exhiInterval );
                     }
                 }
-
+                else
+                {
+                    clearInterval(exhiInterval);
+                }
                 index++;
-
             }, 1000 * 5 );
         }
         else

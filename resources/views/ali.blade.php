@@ -43,7 +43,7 @@
     <section class="section">
         <div class="card">
             <div class="card-body">
-                <table class="table table-bordered table-hover datatable" style="min-width:980px">
+                <table class="table table-bordered table-hover datatable">
                     <thead>
                         <tr>
                             <th style="text-align: center;"></th>

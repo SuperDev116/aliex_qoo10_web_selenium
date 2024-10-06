@@ -2,7 +2,7 @@ module.exports = {
 	HOST: "localhost",
 	USER: "root",
 	PASSWORD: "",
-	DB: "amazon_qoo10",
+	DB: "aliex_qoo10",
 	// USER: "xs998400_webq",
 	// PASSWORD: "YamaTeru1327",
 	// DB: "xs998400_aliq10selenium",

@@ -5,9 +5,9 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Amazon Track">
+  <meta name="description" content="Aliex Track">
   <meta name="csrf-token" content="{{ csrf_token() }}">
-  <title>自動出品</title>
+  <title>{{ env('APP_NAME') }}</title>
   <link rel="stylesheet" href="{{ asset('assets/css/main/app.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/css/main/app-dark.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/plugins/preloader/css/loader-4.css') }}" />
