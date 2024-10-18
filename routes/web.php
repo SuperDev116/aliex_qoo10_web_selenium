@@ -35,7 +35,7 @@ Route::group(['middleware' => ['auth']], function ()
     // Qoo10 products
     Route::get('qoo10/view', [QooController::class, 'index'])->name("qoo10.view");
     Route::get('qoo10/list', [QooController::class, 'list'])->name("qoo10.list");
-    Route::post('qoo10/destroy', [AliController::class, 'destroy'])->name('qoo10.destroy');
+    Route::post('qoo10/destroy', [QooController::class, 'destroy'])->name('qoo10.destroy');
     
     // User
     Route::post('change_pwd', [MypageController::class, 'change_pwd'])->name('change_pwd');

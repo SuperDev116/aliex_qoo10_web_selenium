@@ -282,7 +282,7 @@ def checking_price_stock():
     
     for exhibited_datum in exhibited_data:
         try:
-            driver.get(exhibited_datum['url'])
+            driver.get(f"https:{exhibited_datum['url']}")
             time.sleep(3)
             
             # check price
@@ -295,13 +295,15 @@ def checking_price_stock():
             
             if not r_price == price:
                 print(f"There is a difference between original price _____ {r_price} and current price _____ {price}.")
-                
+                print(exhibited_datum)
                 email = SETTING_VALUE['alert_email']
                 url = "https://qoo10manageable.info/api/v1/alert_mail"
                 
                 payload = {
                     'to': email,
-                    "product": exhibited_datum,
+                    "url": exhibited_datum['url'],
+                    "img_url_main": exhibited_datum['exhibited_datum'],
+                    "r_price": exhibited_datum['r_price'],
                     "price": price
                 }
                 headers = {
@@ -321,7 +323,9 @@ def checking_price_stock():
                 
                 payload = {
                     'to': email,
-                    "product": exhibited_datum,
+                    "url": exhibited_datum['url'],
+                    "img_url_main": exhibited_datum['exhibited_datum'],
+                    "r_price": exhibited_datum['r_price'],
                     "price": price,
                     "quantity": 0
                 }
@@ -335,8 +339,8 @@ def checking_price_stock():
         except:
             pass
         
-        messagebox.showinfo("OK", "価格在庫確認完了しました。")
-        
-        
+    messagebox.showinfo("OK", "価格在庫確認完了しました。")
+    
+
 if __name__ == "__main__":
     scraping()
