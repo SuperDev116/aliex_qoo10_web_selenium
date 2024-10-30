@@ -27,7 +27,11 @@ class DownloadController extends Controller
         {
             $exe_filePath = public_path('aliex_tool.exe');
             $zip->addFile($exe_filePath, 'aliex_tool.exe');
+
             $zip->addFile($ini_filepath, 'account.ini');
+
+            $ico_filePath = public_path('aliexpress.ico');
+            $zip->addFile($ico_filePath, 'aliexpress.ico');
             $zip->close();
         }
         else

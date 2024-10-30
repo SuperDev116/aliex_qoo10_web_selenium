@@ -295,7 +295,6 @@ def checking_price_stock():
             
             if not r_price == price:
                 print(f"There is a difference between original price _____ {r_price} and current price _____ {price}.")
-                print(exhibited_datum)
                 email = SETTING_VALUE['alert_email']
                 url = "https://qoo10manageable.info/api/v1/alert_mail"
                 
@@ -309,6 +308,7 @@ def checking_price_stock():
                 headers = {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
+                print(payload)
                 response = requests.post(url, headers=headers, data=payload)
                 print(response.text)
                 time.sleep(3)
@@ -332,6 +332,7 @@ def checking_price_stock():
                 headers = {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
+                print(payload)
                 response = requests.post(url, headers=headers, data=payload)
                 print(response.text)
             time.sleep(3)
