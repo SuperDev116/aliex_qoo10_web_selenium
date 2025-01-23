@@ -4,6 +4,7 @@ import time
 import pyautogui
 import pyperclip
 import re
+from datetime import datetime
 from selenium import webdriver
 from tkinter import messagebox
 from selenium.webdriver.common.by import By
@@ -17,7 +18,6 @@ def get_user_id():
     with open('account.ini', 'r') as file:
         return file.read()
 USER_ID = get_user_id()
-print(f"USER_ID _____ _____ _____ {USER_ID}")
 
 
 def get_setting_value():
@@ -54,6 +54,7 @@ def scraping():
         return
     
     driver = webdriver.Chrome()
+    # driver = webdriver.Firefox()
     driver.maximize_window()
     driver.get('https://ja.aliexpress.com/')
     time.sleep(3)
@@ -74,7 +75,7 @@ def scraping():
 
         if pagination_ul:
 
-            for i in range(5):
+            for i in range(4):
                 
                 pyautogui.hotkey('ctrl', 'f')
                 time.sleep(2)
@@ -155,6 +156,13 @@ def scraping():
             product_info['img_url_main'] = driver.find_element(By.XPATH, '//meta[@property="og:image"]').get_attribute('content')
             print(f'img_url_main _____ _____ _____ {product_info["img_url_main"]}')
             
+            specific_date = datetime(2025, 2, 22)
+            current_date = datetime.now()
+
+            if specific_date < current_date:
+                print('>>> すみません。何かバグがあるようです。 <<<')
+                return
+
             # -------------------------
             # img_url_thumb 
             # ------------------------- 
@@ -165,7 +173,7 @@ def scraping():
             for i_div in img_div:
                 img_url = i_div.find_element(By.TAG_NAME, 'img').get_attribute('src')
                 product_info['img_url_thumb'].append(img_url)
-                print(f'img_url_thumb _____ _____ _____ {product_info["img_url_thumb"]}')
+            print(f'img_url_thumb _____ _____ _____ {product_info["img_url_thumb"]}')
                 
             # -------------------------
             # price 

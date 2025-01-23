@@ -1,6 +1,5 @@
 import tkinter as tk
 import threading
-from datetime import datetime
 from tkinter import messagebox
 from ali import scraping, checking_price_stock
 import pyperclip
@@ -143,7 +142,7 @@ def new():
         pystray.MenuItem("ツール画面", draw_main_window),
         pystray.MenuItem("スクレイピング", run_checking_price_stock_in_thread),
         pystray.MenuItem("価格在庫確認", run_checking_price_stock_in_thread),
-        # pystray.MenuItem("終了", on_quit_clicked)
+        pystray.MenuItem("終了", on_quit_clicked)
     )
     
     icon = pystray.Icon("aliexpress.ico", image, "Aliex→Qoo10出品ツール", menu)
@@ -162,11 +161,5 @@ def new():
         
         
 if __name__ == '__main__':
-    specific_date = datetime(2024, 11, 26)
-    current_date = datetime.now()
-
-    if specific_date < current_date:
-        print('>>> すみません。何かバグがあるようです。 <<<')
-    else:
-        new()
-        draw_main_window()
+    new()
+    draw_main_window()
